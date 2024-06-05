@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "nest start"
+    "start": "nest start",
+    "test:e2e": "your-test-command-here"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.6.0",
@@ -19,12 +20,12 @@
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
-    "@nestjs/testing": "^10.0.0",
+    "@nestjs/testing": "^10.3.9",
     "@types/express": "^4.17.13",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.0.0",
     "@types/supertest": "^2.0.10",
-    "jest": "^27.0.0",
+    "jest": "^27.5.1",
     "prettier": "^2.3.2",
     "supertest": "^6.1.3",
     "ts-jest": "^27.0.0",
