@@ -1,41 +1,94 @@
-<<<<<<< HEAD
-# Beije User Registration and Verification API
+**User Management System with Email Verification**
 
-This project implements a NestJS backend for user registration, email verification, and verification status checking.
+**Description**
 
-## Project Structure
+This project is a Nest.js application designed to manage user registration and email verification functionalities. It utilizes a MySQL database for data storage and integrates with a mail server for sending verification emails. The application exposes RESTful API endpoints for user registration, email verification, and checking verification status.
 
-- **Framework**: Nest.js
-- **Database**: SQLite
-- **Email Service**: Using SMTP configuration for sending emails
+**Setup Instructions**
 
-### Modules
+Clone the Repository:
 
-- **UserModule**
-  - **UserController**: Handles the registration, email verification, and verification status checking endpoints.
-  - **UserService**: Contains the business logic for registering users, verifying emails, and checking verification status.
-  - **UserEntity**: Represents the User entity in the database.
+bash
+Copy code
+git clone https://github.com/your-repo/project.git
+Install Dependencies:
+Navigate to the project directory and run:
 
-### APIs
+bash
+Copy code
+npm install
+Database Configuration:
+Make sure you have MySQL installed and running. Adjust the database connection settings in app.module.ts to match your MySQL configuration.
 
-- **POST /user/register**
-  - **POST parameters**: `{ username, email }`
-  - **Action**: Registers a new user and sends a verification token to the provided email address.
+**Environment Configuration:**
+Set the following environment variables in your own .env file:
 
-- **GET /user/verify-email/{username}/{verificationToken}**
-  - **GET parameters**: `{ username, verificationToken }`
-  - **Action**: Verifies the user's email using the provided verification token.
+MAIL_USER: Your email address for sending verification emails.
+MAIL_PASS: Your email password or application-specific password.
+MAIL_HOST: SMTP server hostname.
+MAIL_PORT: SMTP server port (e.g., 465 for Gmail).
+DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE: Database connection details.
+Run the Application:
 
-- **GET /user/check-verification/{username}**
-  - **GET parameters**: `{ username }`
-  - **Action**: Checks if the user's email is verified.
+bash
+Copy code
+npm run start
+Access the API:
+The application will be running on http://localhost:3000. You can now access the API endpoints described below.
 
-### Setup and Usage
+**Project Structure**
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository_url>
-   cd <repository_directory>
-=======
-# Beije-Intern-Study-Case
->>>>>>> 34c2746 (Initial commit)
+Controllers
+UserController (user.controller.ts):
+Endpoints:
+POST /user/register: Registers a new user with a unique username and email.
+GET /user/verify-email/:username/:verificationToken: Verifies a user's email using the provided verification token.
+GET /user/check-verification/:username: Checks if a user's email is verified.
+
+Services
+UserService (user.service.ts):
+Functionalities:
+register(username: string, email: string): Registers a new user and sends a verification email.
+verifyEmail(username: string, verificationToken: string): Verifies a user's email using the provided token.
+checkVerification(username: string): Checks if a user's email is verified.
+
+Entities
+User (user.entity.ts):
+Database entity representing a user with fields: id, username, email, verificationToken, and isVerified.
+
+Modules
+UserModule (user.module.ts):
+
+Imports:
+TypeOrmModule for database integration.
+MailerModule for sending verification emails.
+Providers: UserService
+Controllers: UserController
+AppModule (app.module.ts):
+
+Imports:
+TypeOrmModule for database configuration.
+UserModule for user-related functionalities.
+Providers: AppService
+Controllers: AppController
+
+API Endpoints
+
+**POST /user/register**
+
+Description: Registers a new user with a unique username and email.
+Request Body: { "username": "string", "email": "string" }
+
+**GET /user/verify-email/**
+
+Description: Verifies a user's email using the provided verification token.
+Path Parameters: username, verificationToken
+
+**GET /user/check-verification/**
+
+Description: Checks if a user's email is verified.
+Path Parameter: username
+
+
+**Contact Information**
+For any inquiries or support, please contact furkan.kizil@ug.bilkent.edu.tr
