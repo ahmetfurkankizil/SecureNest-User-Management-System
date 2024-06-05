@@ -14,6 +14,13 @@ export class UserService {
     private readonly mailerService: MailerService,
   ) {}
 
+  /**
+   * Registers a new user.
+   * @param {string} username - The username of the user.
+   * @param {string} email - The email of the user.
+   * @returns {Promise<string>} Promise that resolves to a success message.
+   * @throws {BadRequestException} If the username or email already exists.
+   */
   async register(username: string, email: string): Promise<string> {
     const userExists = await this.userRepository.findOne({ where: { username } });
     if (userExists) {
@@ -30,10 +37,21 @@ export class UserService {
     return 'User registered successfully';
   }
 
+  /**
+   * Generates a random verification token.
+   * @returns {string} The generated verification token.
+   */
   private generateVerificationToken(): string {
     return Math.random().toString(36).substring(2, 10);
   }
 
+  /**
+   * Saves user data to the database.
+   * @param {string} username - The username of the user.
+   * @param {string} email - The email of the user.
+   * @param {string} verificationToken - The verification token.
+   * @returns {Promise<User>} Promise that resolves to the saved user data.
+   */
   private async saveUserData(username: string, email: string, verificationToken: string): Promise<User> {
     const user = this.userRepository.create({
       username,
@@ -44,6 +62,12 @@ export class UserService {
     return await this.userRepository.save(user);
   }
 
+  /**
+   * Sends a verification email to the user.
+   * @param {string} email - The email address of the user.
+   * @param {string} verificationToken - The verification token.
+   * @throws {BadRequestException} If sending the email fails.
+   */
   private async sendVerificationEmail(email: string, verificationToken: string) {
     try {
       await this.mailerService.sendMail({
@@ -57,6 +81,14 @@ export class UserService {
     }
   }
 
+  /**
+   * Verifies the user's email.
+   * @param {string} username - The username of the user.
+   * @param {string} verificationToken - The verification token.
+   * @returns {Promise<string>} Promise that resolves to a success message.
+   * @throws {NotFoundException} If the user is not found.
+   * @throws {BadRequestException} If the verification token is invalid.
+   */
   async verifyEmail(username: string, verificationToken: string): Promise<string> {
     const user = await this.userRepository.findOne({ where: { username } });
     if (!user) {
@@ -70,6 +102,12 @@ export class UserService {
     return 'Email verified successfully';
 }
 
+/**
+   * Checks the verification status of the user's email.
+   * @param {string} username - The username of the user.
+   * @returns {Promise<string>} Promise that resolves to the verification status message.
+   * @throws {NotFoundException} If the user is not found.
+   */
   async checkVerification(username: string): Promise<string> {
     const user = await this.userRepository.findOne({ where: { username } });
     if (!user) {
