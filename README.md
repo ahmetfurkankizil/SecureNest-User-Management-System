@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Beije User Registration and Verification API
 
 This project implements a NestJS backend for user registration, email verification, and verification status checking.
@@ -35,3 +36,6 @@ This project implements a NestJS backend for user registration, email verificati
    ```bash
    git clone <repository_url>
    cd <repository_directory>
+=======
+# Beije-Intern-Study-Case
+>>>>>>> 34c2746 (Initial commit)
